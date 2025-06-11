@@ -1,3 +1,3 @@
 <footer>
-    <p>&copy; 2025 Tournoi Hobby Horse — Tous droits réservés </p>
+    <p>&copy; 2025 Canasson Cup — Tous droits réservés </p>
 </footer>

@@ -84,4 +84,5 @@ if (!empty($_POST['tournoi_id'])) {
         </select>
         <button type="submit">M'inscrire au tournoi</button>
     </form>
+    <?php include('footer.php')?>
 </body>

@@ -74,6 +74,6 @@ include('head.php'); ?>
             <button>S'inscrire!</button>
         </form>
     </div>    
+    <?php include('footer.php')?>
 </body>
-<?php include('footer.php')?>
 </html>

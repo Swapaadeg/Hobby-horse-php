@@ -1,0 +1,142 @@
+/* POLICES */
+@font-face {
+    font-family: "Cherry";
+    src: url(../fonts/CherrySwash/CherrySwash-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url(../fonts/Poppins/Poppins-Regular.ttf);
+}
+/* GLOBAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins";
+  font-size: 1.2rem;
+  background-image: url(../img/bg-pink.jpg);
+  background-size: cover;
+  padding-top: 6rem;
+  margin: 0;
+}
+/* TITRES */
+h1 {
+  font-family: 'Cherry';
+  font-size: 4rem;
+  background: linear-gradient(120deg, #FF4EB1, #C06CFF, #4FD1FF, #FFE04E);
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: sparkle 6s linear infinite;
+  position: relative;
+}
+
+h3 {
+    font-style: italic;
+    color: #FF4EB1;
+}
+/* ANIMATION H1 */
+@keyframes sparkle {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* HEADER  */
+header {
+    text-align: center;
+}
+.title {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+}
+.title img{
+    width: 70px;
+    height: 70px;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #FF4EB1, #C06CFF, #4FD1FF);
+    color: white;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    flex-wrap: wrap;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #FFE04E;
+}
+
+/* Bloc auth avec fond à part */
+.auth a{
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    transition: color 0.3s ease;
+}
+/* BANNER  */
+.banner {
+    margin-top: 4rem;
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  overflow: hidden;
+
+}
+
+#background-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+
+/* FOOTER  */
+footer {
+    background: linear-gradient(90deg, #FF4EB1, #C06CFF, #4FD1FF);
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+    padding: 1rem;
+    font-weight: 300;
+    box-shadow: 0 -3px 10px rgba(0,0,0,0.2);
+}
