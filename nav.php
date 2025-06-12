@@ -18,12 +18,17 @@
             <?php endif; ?>
         </ul>
 
-        <ul>
-            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                <li><a href="tournoi-create.php">Création d'un Tournoi</a></li>
-                <li><a href="gestion-joueur.php">Gérer les joueurs</a></li>
-                <li><a href="match.php">Gérer les matchs</a></li>
-            <?php endif; ?>
-        </ul>
+        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+            <ul class="admin-dropdown">
+                <li class="dropdown">
+                    <a href="#">Panel admin ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="tournoi-create.php">Créer un Tournoi</a></li>
+                        <li><a href="gestion-joueur.php">Gérer les joueurs</a></li>
+                        <li><a href="match.php">Gérer les matchs</a></li>
+                    </ul>
+                </li>
+            </ul>
+        <?php endif; ?>
     </div>
 </nav>

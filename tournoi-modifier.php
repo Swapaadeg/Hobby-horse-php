@@ -89,7 +89,7 @@ include('head.php');
             } ?>
         <?php } ?>
         <div class="formulaire">
-            <form action="tournoi-modifier.php?id=<?php echo $tournament_id; ?>" method="post">
+            <form id="auth" action="tournoi-modifier.php?id=<?php echo $tournament_id; ?>" method="post">
                 <label for="nom">Nom du Tournoi</label>
                 <input type="text" name="nom" id="nom" value="<?php echo htmlspecialchars($tournament['nom'], ENT_QUOTES, 'UTF-8'); ?>" required>
                 <label for="date">Date du Tournoi</label>
@@ -101,7 +101,7 @@ include('head.php');
                 </select>
                 <label for="description">Description</label>
                 <textarea name="description" id="description" required><?php echo htmlspecialchars($tournament['description'], ENT_QUOTES, 'UTF-8'); ?></textarea>
-                <button>Modifier le Tournoi</button>
+                <button class="button-form">Modifier le Tournoi</button>
             </form>
         </div>
     </section>

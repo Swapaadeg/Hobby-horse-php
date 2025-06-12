@@ -67,28 +67,27 @@ if (!empty($_POST['tournoi_id'])) {
 ?>
 
 <?php include('head.php');?>
-<?php include('nav.php');?>
-
-<h2>Inscription à un tournoi</h2>
-
-<?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-    <p class="success">Vous êtes inscrit au tournoi avec succès !</p>
-<?php elseif (isset($_GET['error'])): ?>
-    <?php switch ($_GET['error']) {
-        case 1:
-            echo "<p class='error'>Vous êtes déjà inscrit à ce tournoi.</p>";
-            break;
-        case 2:
-            echo "<p class='error'>Tournoi non trouvé.</p>";
-            break;
-        case 3:
-            echo "<p class='error'>Le nombre maximum de participants pour ce tournoi est atteint.</p>";
-            break;
-    } ?>
-<?php endif; ?>
 <body>
+    <?php include('nav.php');?>
     <section class="tournoi-inscription__wrapper container">
-        <form method="POST" action="tournoi-inscription.php">
+        <h2>Inscription à un tournoi</h2>
+
+        <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+            <p class="success">Vous êtes inscrit au tournoi avec succès !</p>
+        <?php elseif (isset($_GET['error'])): ?>
+            <?php switch ($_GET['error']) {
+                case 1:
+                    echo "<p class='error'>Vous êtes déjà inscrit à ce tournoi.</p>";
+                    break;
+                case 2:
+                    echo "<p class='error'>Tournoi non trouvé.</p>";
+                    break;
+                case 3:
+                    echo "<p class='error'>Le nombre maximum de participants pour ce tournoi est atteint.</p>";
+                    break;
+            } ?>
+        <?php endif; ?>
+        <form id="auth" method="POST" action="tournoi-inscription.php">
             <label for="tournoi_id">Choisissez un tournoi :</label>
             <select name="tournoi_id" id="tournoi_id" required>
                 <option value="" disabled selected>-- Sélectionner un tournoi --</option>
@@ -119,7 +118,7 @@ if (!empty($_POST['tournoi_id'])) {
                 }
                 ?>
             </select>
-            <button type="submit">M'inscrire au tournoi</button>
+            <button type="submit" class="button-form">M'inscrire au tournoi</button>
         </form>
     </section>
     <?php include('footer.php')?>

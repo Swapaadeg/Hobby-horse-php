@@ -56,7 +56,7 @@ include('head.php');
             } ?>
         <?php } ?>
         <div class="formulaire">
-            <form action="tournoi-create.php" method="post">
+            <form id="auth"action="tournoi-create.php" method="post">
                 <label for="nom">Nom du Tournoi</label>
                 <input type="text" name="nom" id="nom" required>
                 <label for="date">Date du Tournoi</label>
@@ -68,7 +68,7 @@ include('head.php');
                 </select>
                 <label for="description">Description</label>
                 <textarea id="description" name="description" required></textarea>
-                <button>Créer le Tournoi</button>
+                <button class="button-form">Créer le Tournoi</button>
             </form>
         </div>
     </section>

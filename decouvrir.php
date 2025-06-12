@@ -1,4 +1,5 @@
 <?php include('function.php');?>
+<?php $pageTitle = "Découvrir le Hobby Horse";?>
 <?php include('head.php');?>
 <body>
     <?php include('nav.php') ?>

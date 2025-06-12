@@ -1,0 +1,68 @@
+@use "../abstracts/variables" as variable;
+
+.bracket {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+
+  .round {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    h4 {
+      font-size: 1.5rem;
+      color: variable.$color-purple;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    .match-box {
+      background: linear-gradient(135deg, variable.$color-pink, variable.$color-blue);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      min-width: 200px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 25px variable.$color-purple;
+      }
+
+      span {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        font-size: 1rem;
+        margin: 0.3rem 0;
+
+        .score {
+          background-color: rgba(255, 255, 255, 0.2);
+          border-radius: 1rem;
+          padding: 0.2rem 0.6rem;
+          font-size: 0.8rem;
+          font-weight: 600;
+          margin-left: 0.5rem;
+        }
+
+        &.winner {
+          color: variable.$color-pink;
+          font-size: 1.05rem;
+        }
+      }
+    }
+  }
+}

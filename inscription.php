@@ -47,33 +47,36 @@ if(!empty($_POST['nom_utilisateur']) && !empty($_POST['mot_de_passe'])){
 ?>
 
 <?php 
-$pageTitle = "Inscription";
-include('head.php'); ?>
+    $pageTitle = "Inscription";
+    include('head.php'); 
+?>
 <body>
     <?php include('nav.php') ?>
-    <h2>Inscription</h2>
-    
-    <?php if(isset($_GET['error'])){ ?>
-       <?php  switch($_GET['error']){
-                case 1:
-                    echo "<p class='error'>Vos mots de passe ne correspondent pas</p>";
-                    break;
-                case 2:
-                    echo "<p class='error'>Ce nom d'utilisateur existe déjà</p>";
-                    break;
-            }
-        } ?>
-    <div class="formulaire__wrapper container">
-        <form action="inscription.php" method="post">
-            <label for="nom_utilisateur">Votre Pseudo</label>
-            <input type="text" name="nom_utilisateur" id="nom_utilisateur">
-            <label for="password">Votre mot de passe</label>
-            <input type="password" name="mot_de_passe" id="mot_de_passe">
-            <label for="passwordConfirm">Confirmez votre mot de passe</label>
-            <input type="password" name="mot_de_passeConfirm" id="mot_de_passeConfirm">
-            <button>S'inscrire!</button>
-        </form>
-    </div>    
+    <section class="inscription__wrapper container">
+        <h2>Inscription</h2>
+        
+        <?php if(isset($_GET['error'])){ ?>
+        <?php  switch($_GET['error']){
+                    case 1:
+                        echo "<p class='error'>Vos mots de passe ne correspondent pas</p>";
+                        break;
+                    case 2:
+                        echo "<p class='error'>Ce nom d'utilisateur existe déjà</p>";
+                        break;
+                }
+            } ?>
+        <div class="formulaire__wrapper container">
+            <form id="auth" action="inscription.php" method="post">
+                <label for="nom_utilisateur">Votre Pseudo</label>
+                <input type="text" name="nom_utilisateur" id="nom_utilisateur">
+                <label for="password">Votre mot de passe</label>
+                <input type="password" name="mot_de_passe" id="mot_de_passe">
+                <label for="passwordConfirm">Confirmez votre mot de passe</label>
+                <input type="password" name="mot_de_passeConfirm" id="mot_de_passeConfirm">
+                <button class="button-form">S'inscrire!</button>
+            </form>
+        </div>
+    </section>
     <?php include('footer.php')?>
 </body>
 </html>

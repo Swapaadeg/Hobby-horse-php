@@ -79,7 +79,7 @@ if (!empty($_POST['tournoi_id']) && !empty($_POST['joueur_id'])) {
             } ?>
         <?php endif; ?>
 
-        <form method="POST" action="gestion-joueur.php">
+        <form id="auth" method="POST" action="gestion-joueur.php">
             <label for="tournoi_id">Choisissez un tournoi :</label>
             <select name="tournoi_id" id="tournoi_id" required>
                 <option value="" disabled selected>-- Sélectionner un tournoi --</option>
@@ -124,7 +124,7 @@ if (!empty($_POST['tournoi_id']) && !empty($_POST['joueur_id'])) {
                 ?>
             </select>
 
-            <button type="submit">Inscrire le joueur</button>
+            <button type="submit" class="button-form">Inscrire le joueur</button>
         </form>
     </section>
     <?php include('footer.php') ?>

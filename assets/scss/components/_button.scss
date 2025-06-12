@@ -21,3 +21,21 @@
         }
     }
 }
+
+.button-form {
+margin-top: 1rem;
+padding: 0.8rem 1.5rem;
+font-weight: bold;
+border: none;
+border-radius: 2rem;
+background: linear-gradient(135deg, variable.$color-pink, variable.$color-purple);
+color: white;
+box-shadow: 0 0 30px rgba(variable.$color-pink, 0.3);
+cursor: pointer;
+transition: all 0.3s ease;
+
+&:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(variable.$color-pink, 0.6), 0 0 40px rgba(variable.$color-purple, 0.4);
+}
+}

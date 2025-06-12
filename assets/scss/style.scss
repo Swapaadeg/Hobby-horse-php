@@ -7,8 +7,8 @@
 @use "components/button";
 @use "components/banner";
 @use "components/cards";
-@use "components/videos";
 @use "components/animation";
+@use "components/formulaires";
 
 // Abstracts
 @use "abstracts/variables";
@@ -21,9 +21,7 @@
 
 //Pages
 
-@use "pages/connexion";
 @use "pages/homepage";
-@use "pages/inscription-tournoi";
-@use "pages/inscription";
 @use "pages/tournois";
 @use "pages/decouvrir";
+@use "pages/resultats";

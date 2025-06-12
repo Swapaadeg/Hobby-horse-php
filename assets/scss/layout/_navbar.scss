@@ -1,4 +1,6 @@
 @use "../abstracts/variables" as variable;
+
+
 nav {
     position: fixed;
     top: 0;
@@ -63,4 +65,57 @@ ul.menu{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+// Dropdown Admin
+
+.admin-dropdown {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .dropdown {
+        position: relative;
+
+        > a {
+        color: white;
+        padding: 1rem;
+        display: inline-block;
+        font-weight: bold;
+        cursor: pointer;
+        }
+
+        .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: variable.$color-purple;
+        border-radius: 0 0 1rem 1rem;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: none;
+        z-index: 10;
+
+            li {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+                a {
+                display: block;
+                padding: 0.8rem 1.2rem;
+                color: white;
+                text-decoration: none;
+
+                    &:hover {
+                        background-color: variable.$color-pink;
+                    }
+                }
+            }
+        }
+
+        &:hover .dropdown-menu {
+        display: block;
+        }
+    }
 }
