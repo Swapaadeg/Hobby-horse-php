@@ -3,7 +3,7 @@
     <label for="menu-toggle" class="menu-icon">&#9776;</label> -->
     <div class="navbar">
         <ul class="menu">
-            <li><a href="index.php">Accueil</a></li>
+            <li><a href="index.php"><img src="assets/img/logo-unicorn.png" alt=""></a></li>
             <li><a href="decouvrir.php">Découvrir le hobby horse</a></li>
             <li><a href="tournois.php">Nos tournois</a></li>
 
