@@ -16,7 +16,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $tournament_id = (int)$_GET['id'];
 
 // Récupérer les détails du tournoi
-$request = $bdd->prepare("SELECT nom, date 
+$request = $bdd->prepare("SELECT nom, date, description
                         FROM tournois 
                         WHERE id = :id"
                         );
@@ -32,7 +32,7 @@ if (!$tournament) {
 if (!empty($_POST['nom']) && !empty($_POST['date'])) {
     $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES, 'UTF-8');
     $date = htmlspecialchars($_POST['date'], ENT_QUOTES, 'UTF-8');
-
+    $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
     // Vérifier si un autre tournoi avec le même nom existe 
     $request = $bdd->prepare("SELECT COUNT(*) AS nb 
                             FROM tournois 
@@ -47,10 +47,11 @@ if (!empty($_POST['nom']) && !empty($_POST['date'])) {
         exit();
     } else {
         // Mise à jour du tournoi
-        $request = $bdd->prepare('UPDATE tournois SET nom = :nom, date = :date WHERE id = :id');
+        $request = $bdd->prepare('UPDATE tournois SET nom = :nom, date = :date, description = :description WHERE id = :id');
         $request->execute([
             'nom' => $nom,
             'date' => $date,
+            'description' => $description,
             'id' => $tournament_id
         ]);
 
@@ -95,6 +96,8 @@ include('head.php');
                 <input type="text" name="nom" id="nom" value="<?php echo htmlspecialchars($tournament['nom'], ENT_QUOTES, 'UTF-8'); ?>" required>
                 <label for="date">Date du Tournoi</label>
                 <input type="date" name="date" id="date" value="<?php echo htmlspecialchars($tournament['date'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                <label for="description">Description</label>
+                <textarea name="description" id="description" required><?php echo htmlspecialchars($tournament['description'], ENT_QUOTES, 'UTF-8'); ?></textarea>
                 <button>Modifier le Tournoi</button>
             </form>
         </div>

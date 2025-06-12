@@ -1,23 +1,24 @@
 @use "../abstracts/variables" as variable;
 * {
     box-sizing: border-box;
-};
+}
 
 body {
     font-family: variable.$font-primary;
     font-size: 1.2rem;
     margin: 0;
-    padding-top: 6rem;
+    padding-top: 4rem;
     background-image: url(../../assets/img/bg-pink.jpg)
-};
+}
 
 section {
     margin-bottom: 3rem;
-};
+}
 
 h1 {
     font-family: variable.$font-title-1;
     font-size: 4rem;
+    margin-bottom: 0;
     background: linear-gradient(120deg, variable.$color-pink, variable.$color-purple, variable.$color-blue, variable.$color-yellow);
     background-size: 300%;
     -webkit-background-clip: text;
@@ -29,9 +30,11 @@ h2 {
     font-family: variable.$font-h2;
     font-size: 2rem;
     color: variable.$color-blue;
+    
 }
 
 h3 {
     font-style: italic;
     color: variable.$color-pink;
+    text-align: center;
 }

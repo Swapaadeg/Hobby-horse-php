@@ -23,7 +23,7 @@ include('function.php');?>
         <section class="homepage__wrapper container">
             <!-- Bienvenue -->
             <?php if (isset($_SESSION['nom_utilisateur'])): ?>
-                <h3>Bonjour <?= ucfirst(htmlspecialchars($_SESSION['nom_utilisateur'])) ?> !</h3>
+                <h3 class="h3-bonjour">Bonjour <?= ucfirst(htmlspecialchars($_SESSION['nom_utilisateur'])) ?> !</h3>
             <?php endif; ?>
             <!-- SUCCESS  -->
             <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>

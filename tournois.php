@@ -23,12 +23,14 @@ include('function.php');
 
                     echo '<h3>' . ucfirst($data['nom']) . '</h3>';
                     echo '<p class="tournament-date"><strong>Date :</strong> ' . date('d/m/Y', strtotime($data['date'])) . '</p>';
-                    echo '<p class="tournament-desc">' . nl2br(htmlspecialchars($data['description'])) . '</p>';
+                    echo '<p class="tournament-desc">' . nl2br($data['description']) . '</p>';
                     // echo '<p class="tournament-statut">' . htmlspecialchars($data['statut']) . '</p>';
-                    echo '<div class="btn-card">';
-                    echo '<a class="btn" href="tournoi-modifier.php?id=' . $data['id'] . '">Modifier</a>';
-                    echo '<a class="btn" href="tournoi-supprimer.php?id=' . $data['id'] . '" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer ce tournoi 🐎 ?\')">Supprimer</a>';
-                    echo '</div>';
+                    if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+                        echo '<div class="btn-card">';
+                        echo '<a class="btn" href="tournoi-modifier.php?id=' . $data['id'] . '">Modifier</a>';
+                        echo '<a class="btn" href="tournoi-supprimer.php?id=' . $data['id'] . '" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer ce tournoi 🐎 ?\')">Supprimer</a>';
+                        echo '</div>';
+                    }
                     echo '</div>';
                 }
             ?>

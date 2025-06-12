@@ -1,22 +1,22 @@
 @use "../abstracts/variables" as variable;
 
-  .btn-card {
+.btn-card {
     display: flex;
     justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
 
     .btn {
-      padding: 0.6rem 1.2rem;
-      background: variable.$color-purple;
-      color: white;
-      font-weight: bold;
-      border-radius: 1rem;
-      text-decoration: none;
-      transition: background 0.3s;
+    padding: 0.6rem 1.2rem;
+    background: variable.$color-purple;
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    text-decoration: none;
+    transition: background 0.3s;
 
-      &:hover {
+        &:hover {
         background: variable.$color-blue;
-      }
+        }
     }
-  }
+}

@@ -6,9 +6,10 @@ header {
 .title {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 4rem;
 }
-.title img{
-    width: 70px;
-    height: 70px;
+.title img {
+    width: 60px;
+    height: 60px;
 }
