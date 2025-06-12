@@ -3,6 +3,7 @@
     if(!empty($_POST['nom']) && !empty($_POST['date'])){
         $nom = htmlspecialchars($_POST['nom']);
         $date = htmlspecialchars($_POST['date']);
+        $description = htmlspecialchars($_POST['description']);
         
         $request = $bdd->prepare("SELECT COUNT(*) AS nb 
                                 FROM tournois 
@@ -18,13 +19,14 @@
         }else{
 
             // Préparation de la requête
-            $request = $bdd->prepare('INSERT INTO tournois (nom,date)
-                                    VALUES (:nom,:date)'
+            $request = $bdd->prepare('INSERT INTO tournois (nom,date,description)
+                                    VALUES (:nom,:date,:description)'
         );
 
             $request->execute(array(
             'nom' =>  $nom,
-            'date'  =>  $date
+            'date'  =>  $date,
+            'description' => $description
             ));
 
             // Redirection vers l'accueil
@@ -39,28 +41,32 @@
     include('head.php'); 
 ?>
 <body>
-    <?php include('nav.php') ?>
-    <h2>Création d'un Tournoi</h2>
+    <section class="create-tournament__wrapper container">
+        <?php include('nav.php') ?>
+        <h2>Création d'un Tournoi</h2>
 
-    <?php if(isset($_GET['error'])){ ?>
-       <?php  switch($_GET['error']){
-                case 1:
-                    echo "<p class='error'>Vos mots de passe ne correspondent pas</p>";
-                    break;
-                case 2:
-                    echo "<p class='error'>Ce nom d'utilisateur existe déjà</p>";
-                    break;
-            }
-        } ?>
-    <div class="formulaire">
-        <form action="tournoi-create.php" method="post">
-            <label for="nom">Nom du Tournoi</label>
-            <input type="text" name="nom" id="nom">
-            <label for="date">Date du Tournoi</label>
-            <input type="date" name="date" id="date">
-            <button>Créer le Tournoi</button>
-        </form>
-    </div>
+        <?php if(isset($_GET['error'])){ ?>
+        <?php  switch($_GET['error']){
+                    case 1:
+                        echo "<p class='error'>Vos mots de passe ne correspondent pas</p>";
+                        break;
+                    case 2:
+                        echo "<p class='error'>Ce nom d'utilisateur existe déjà</p>";
+                        break;
+                }
+            } ?>
+        <div class="formulaire">
+            <form action="tournoi-create.php" method="post">
+                <label for="nom">Nom du Tournoi</label>
+                <input type="text" name="nom" id="nom">
+                <label for="date">Date du Tournoi</label>
+                <input type="date" name="date" id="date">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" required></textarea>
+                <button>Créer le Tournoi</button>
+            </form>
+        </div>
+    </section>
     <?php include('footer.php')?>
 </body>
 </html>

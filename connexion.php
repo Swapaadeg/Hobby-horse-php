@@ -31,7 +31,7 @@
 <body>
     <?php include('nav.php') ?>
     <h2>Connexion</h2>
-    <div class="formulaire">
+    <div class="formulaire__wrapper container">
         <form id="auth" action="connexion.php" method='POST'>
             <label for="nom_utilisateur">Votre Pseudo</label>
             <input type="text" name="nom_utilisateur" id="nom_utilisateur">

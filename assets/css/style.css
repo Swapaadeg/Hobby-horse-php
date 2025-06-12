@@ -96,6 +96,25 @@ nav {
   transition: color 0.3s ease;
 }
 
+.btn-card {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.btn-card .btn {
+  padding: 0.6rem 1.2rem;
+  background: #C06CFF;
+  color: white;
+  font-weight: bold;
+  border-radius: 1rem;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.btn-card .btn:hover {
+  background: #4FD1FF;
+}
+
 .banner {
   margin-top: 4rem;
   position: relative;
@@ -151,6 +170,7 @@ h1 {
 h2 {
   font-family: "PoppinsBold";
   font-size: 2rem;
+  color: #4FD1FF;
 }
 
 h3 {
@@ -161,6 +181,55 @@ h3 {
 .container {
   width: 80%;
   margin: 0 auto;
+}
+
+.tournaments__wrapper {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.tournaments {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.tournament-card {
+  background: #fff;
+  border-radius: 2rem;
+  box-shadow: 0 0 20px rgba(255, 182, 255, 0.3);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 350px;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+.tournament-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 25px rgba(255, 140, 255, 0.4);
+}
+.tournament-card p.tournament-date {
+  font-family: "PoppinsBold";
+  color: #C06CFF;
+  margin: 0.5rem 0;
+}
+.tournament-card .image-container {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  margin-bottom: 1rem;
+}
+.tournament-card .image-container p.tournament-desc {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 1rem;
+}
+.tournament-card .image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /*# sourceMappingURL=style.css.map */

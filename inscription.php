@@ -63,7 +63,7 @@ include('head.php'); ?>
                     break;
             }
         } ?>
-    <div class="formulaire">
+    <div class="formulaire__wrapper container">
         <form action="inscription.php" method="post">
             <label for="nom_utilisateur">Votre Pseudo</label>
             <input type="text" name="nom_utilisateur" id="nom_utilisateur">

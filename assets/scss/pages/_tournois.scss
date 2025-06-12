@@ -1,0 +1,51 @@
+@use "../abstracts/variables" as variable;
+.tournaments__wrapper {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.tournaments {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+}
+
+.tournament-card {
+    background: #fff;
+    border-radius: 2rem;
+    box-shadow: 0 0 20px rgba(255, 182, 255, 0.3);
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 350px;
+    transition: transform 0.3s ease;
+    position: relative;
+
+    &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 25px rgba(255, 140, 255, 0.4);
+    }
+    p.tournament-date {
+        font-family: variable.$font-h2;
+        color: variable.$color-purple;
+        margin: 0.5rem 0;
+    }
+    .image-container {
+        height: 200px;
+        overflow: hidden;
+        border-radius: 1.5rem;
+        margin-bottom: 1rem;
+
+    p.tournament-desc {
+        font-style: italic;
+        color: #555;
+        margin-bottom: 1rem;
+    }
+        img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        }
+    }
+}

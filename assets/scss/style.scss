@@ -18,3 +18,11 @@
 @use "base/utilities";
 @use "base/font-face";
 @use "base/responsive";
+
+//Pages
+
+@use "pages/connexion";
+@use "pages/homepage";
+@use "pages/inscription-tournoi";
+@use "pages/inscription";
+@use "pages/tournois";
