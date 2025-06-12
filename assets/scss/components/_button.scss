@@ -2,9 +2,10 @@
 
 .btn-card {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: auto;
 
     .btn {
     padding: 0.6rem 1.2rem;

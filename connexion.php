@@ -16,6 +16,25 @@
             $_SESSION['nom_utilisateur'] = $data['nom_utilisateur'];
             $_SESSION['id'] = $data['id'];
             $_SESSION['role'] = $data['role'];
+
+             // Si la case "se souvenir de moi est coché
+            if (!empty($_POST['souvenir'])) {
+                $token = bin2hex(random_bytes(32));
+
+                // Sauvegarder le token en base
+                $stmt = $bdd->prepare("UPDATE utilisateurs 
+                                    SET token = :token 
+                                    WHERE id = :id"
+                                    );
+                $stmt->execute([
+                    'token' => $token,
+                    'id' => $data['id']
+                ]);
+
+                // Créer un cookie pour 30 jours
+                setcookie('auth_token', $token, time() + (86400 * 7), '/', '', false, true);
+            }
+            
             header('location: index.php');
             exit();
         }else{
@@ -37,6 +56,9 @@
             <input type="text" name="nom_utilisateur" id="nom_utilisateur">
             <label for="mot_de_passe">Votre mot de passe</label>
             <input type="password" name="mot_de_passe" id="mot_de_passe">
+            <label>
+                <input type="checkbox" name="souvenir"> Se souvenir de moi
+            </label>
             <button>Me connecter</button>
         </form> 
     </div>

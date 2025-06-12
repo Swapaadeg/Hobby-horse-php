@@ -3,21 +3,26 @@
 .tournament-card {
     background: #fff;
     border-radius: 2rem;
-    box-shadow: 0 0 20px rgba(255, 182, 255, 0.3);
+    box-shadow: 0 0 40px rgba(variable.$color-pink, 0.6);
     padding: 1.5rem;
     width: 100%;
-    max-width: 350px;
+    max-width: 20vw;
     transition: transform 0.3s ease;
     position: relative;
-
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    h3{
+        margin: 0;
+    }
     &:hover {
         transform: scale(1.03);
         box-shadow: 0 0 25px rgba(255, 140, 255, 0.4);
     }
-    p .tournament-date {
+    .tournament-date {
         font-family: variable.$font-h2;
         color: variable.$color-purple;
-        margin: 0.5rem 0;
+        margin: 0;
     }
     .image-container {
         height: 200px;
@@ -25,9 +30,9 @@
         border-radius: 1.5rem;
         margin-bottom: 1rem;
 
-        p .tournament-desc {
+        .tournament-desc {
             color: #555;
-            margin-bottom: 1rem;
+            margin: 0;
         }
         img {
         width: 100%;

@@ -1,6 +1,6 @@
 <?php 
-$pageTitle = "Tournois";
-include('function.php');
+    $pageTitle = "Tournois";
+    include('function.php');
 ?>
 <?php include('head.php');?>
 
@@ -10,9 +10,10 @@ include('function.php');
         <h2>Nos tournois</h2>
         <div class="tournaments">
             <?php
-                $request = $bdd->query('SELECT *
-                                        FROM tournois
-                                        ORDER BY tournois.date ASC');
+                $request = $bdd->query('SELECT * FROM tournois 
+                                        ORDER BY tournois.date 
+                                        ASC'
+                                        );
                 while ($data = $request->fetch()) {
                     echo '<div class="tournament-card">';
 
@@ -22,13 +23,15 @@ include('function.php');
                     echo '</div>';
 
                     echo '<h3>' . ucfirst($data['nom']) . '</h3>';
+                    echo '<p class="tournament-type"><strong>Type :</strong> ' . ($data['type'] === 'elimination' ? 'Élimination' : 'Championnat') . '</p>';
                     echo '<p class="tournament-date"><strong>Date :</strong> ' . date('d/m/Y', strtotime($data['date'])) . '</p>';
                     echo '<p class="tournament-desc">' . nl2br($data['description']) . '</p>';
-                    // echo '<p class="tournament-statut">' . htmlspecialchars($data['statut']) . '</p>';
+
                     if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
                         echo '<div class="btn-card">';
                         echo '<a class="btn" href="tournoi-modifier.php?id=' . $data['id'] . '">Modifier</a>';
                         echo '<a class="btn" href="tournoi-supprimer.php?id=' . $data['id'] . '" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer ce tournoi 🐎 ?\')">Supprimer</a>';
+                        echo '<a class="btn" href="match.php?id=' . $data['id'] . '">Gérer les Matchs</a>';
                         echo '</div>';
                     }
                     echo '</div>';
@@ -36,4 +39,6 @@ include('function.php');
             ?>
         </div>
     </section>
+    <?php include('footer.php')?>
 </body>
+</html>

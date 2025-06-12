@@ -1,13 +1,11 @@
 <?php
 include('function.php');
 
-// Restreindre l'accès aux admi
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header('Location: index.php?error=access_denied');
     exit();
 }
 
-// Vérifier l'id du tournoi 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header('Location: tournois.php?error=invalid_id');
     exit();
@@ -15,8 +13,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $tournament_id = (int)$_GET['id'];
 
-// Récupérer les détails du tournoi
-$request = $bdd->prepare("SELECT nom, date, description
+$request = $bdd->prepare("SELECT nom, date, description, type 
                         FROM tournois 
                         WHERE id = :id"
                         );
@@ -28,12 +25,12 @@ if (!$tournament) {
     exit();
 }
 
-// formulaire pour la modification
-if (!empty($_POST['nom']) && !empty($_POST['date'])) {
+if (!empty($_POST['nom']) && !empty($_POST['date']) && !empty($_POST['type'])) {
     $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES, 'UTF-8');
     $date = htmlspecialchars($_POST['date'], ENT_QUOTES, 'UTF-8');
     $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
-    // Vérifier si un autre tournoi avec le même nom existe 
+    $type = in_array($_POST['type'], ['elimination', 'championnat']) ? $_POST['type'] : $tournament['type'];
+
     $request = $bdd->prepare("SELECT COUNT(*) AS nb 
                             FROM tournois 
                             WHERE nom = :nom 
@@ -46,16 +43,17 @@ if (!empty($_POST['nom']) && !empty($_POST['date'])) {
         header('Location: tournoi-modifier.php?id=' . $tournament_id . '&error=2');
         exit();
     } else {
-        // Mise à jour du tournoi
-        $request = $bdd->prepare('UPDATE tournois SET nom = :nom, date = :date, description = :description WHERE id = :id');
+        $request = $bdd->prepare('UPDATE tournois 
+                                SET nom = :nom, date = :date, description = :description, type = :type 
+                                WHERE id = :id'
+                                );
         $request->execute([
             'nom' => $nom,
             'date' => $date,
             'description' => $description,
+            'type' => $type,
             'id' => $tournament_id
         ]);
-
-        // direction vers la liste des tournois
         header('Location: tournois.php?success=4');
         exit();
     }
@@ -86,7 +84,7 @@ include('head.php');
                     echo "<p class='error'>Identifiant de tournoi invalide</p>";
                     break;
                 case 'tournament_not_found':
-                    echo "<p class='error'>Tournoi non trouvé</p>";
+                    echo "<p class='error'>Ce Tournoi n'existe pas demandé à l'admin de le créer</p>";
                     break;
             } ?>
         <?php } ?>
@@ -96,6 +94,11 @@ include('head.php');
                 <input type="text" name="nom" id="nom" value="<?php echo htmlspecialchars($tournament['nom'], ENT_QUOTES, 'UTF-8'); ?>" required>
                 <label for="date">Date du Tournoi</label>
                 <input type="date" name="date" id="date" value="<?php echo htmlspecialchars($tournament['date'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                <label for="type">Type de Tournoi</label>
+                <select name="type" id="type" required>
+                    <option value="elimination" <?php echo $tournament['type'] === 'elimination' ? 'selected' : ''; ?>>Élimination (8 participants)</option>
+                    <option value="championnat" <?php echo $tournament['type'] === 'championnat' ? 'selected' : ''; ?>>Championnat (8 à 12 participants)</option>
+                </select>
                 <label for="description">Description</label>
                 <textarea name="description" id="description" required><?php echo htmlspecialchars($tournament['description'], ENT_QUOTES, 'UTF-8'); ?></textarea>
                 <button>Modifier le Tournoi</button>
