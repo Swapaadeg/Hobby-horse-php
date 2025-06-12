@@ -1,0 +1,12 @@
+@use "../abstracts/variables" as variable;
+
+/* FOOTER  */
+footer {
+    background: linear-gradient(90deg, variable.$color-pink,variable.$color-purple,variable.$color-blue);
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+    padding: 1rem;
+    font-weight: 300;
+    box-shadow: 0 -3px 10px rgba(0,0,0,0.2);
+}

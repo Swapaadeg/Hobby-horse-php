@@ -1,0 +1,22 @@
+{
+  "name": "hobby-horse",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass -w assets/scss:assets/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Swapaadeg/Hobby-horse-php.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Swapaadeg/Hobby-horse-php/issues"
+  },
+  "homepage": "https://github.com/Swapaadeg/Hobby-horse-php#readme",
+  "description": "",
+  "dependencies": {
+    "sass": "^1.89.2"
+  }
+}

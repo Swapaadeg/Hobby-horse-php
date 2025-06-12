@@ -1,0 +1,17 @@
+@use "../abstracts/variables" as variable;
+
+.banner {
+    margin-top: 4rem;
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
