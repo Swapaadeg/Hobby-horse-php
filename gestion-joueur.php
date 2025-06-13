@@ -13,7 +13,10 @@ if (!empty($_POST['tournoi_id']) && !empty($_POST['joueur_id'])) {
     $joueur_id = intval($_POST['joueur_id']);
 
     // Vérifier le type de tournoi et le nombre de participants
-    $request = $bdd->prepare("SELECT type FROM tournois WHERE id = :tournoi_id");
+    $request = $bdd->prepare("SELECT type 
+                            FROM tournois 
+                            WHERE id = :tournoi_id"
+                            );
     $request->execute(['tournoi_id' => $tournoi_id]);
     $tournoi = $request->fetch();
 
@@ -22,7 +25,10 @@ if (!empty($_POST['tournoi_id']) && !empty($_POST['joueur_id'])) {
         exit();
     }
 
-    $request = $bdd->prepare("SELECT COUNT(*) AS nb FROM tournoi_participants WHERE tournoi_id = :tournoi_id");
+    $request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                            FROM tournoi_participants 
+                            WHERE tournoi_id = :tournoi_id"
+                            );
     $request->execute(['tournoi_id' => $tournoi_id]);
     $participant_count = $request->fetch()['nb'];
 
@@ -36,7 +42,11 @@ if (!empty($_POST['tournoi_id']) && !empty($_POST['joueur_id'])) {
     }
 
     // Vérifier que le joueur n’est pas déjà inscrit
-    $check = $bdd->prepare("SELECT COUNT(*) AS nb FROM tournoi_participants WHERE tournoi_id = :tournoi_id AND joueur_id = :joueur_id");
+    $check = $bdd->prepare("SELECT COUNT(*) AS nb 
+                            FROM tournoi_participants 
+                            WHERE tournoi_id = :tournoi_id 
+                            AND joueur_id = :joueur_id"
+                            );
     $check->execute(['tournoi_id' => $tournoi_id, 'joueur_id' => $joueur_id]);
     $exist = $check->fetch();
 
@@ -46,7 +56,9 @@ if (!empty($_POST['tournoi_id']) && !empty($_POST['joueur_id'])) {
     }
 
     // Inscription du joueur
-    $stmt = $bdd->prepare("INSERT INTO tournoi_participants (tournoi_id, joueur_id) VALUES (:tournoi_id, :joueur_id)");
+    $stmt = $bdd->prepare("INSERT INTO tournoi_participants (tournoi_id, joueur_id) 
+                        VALUES (:tournoi_id, :joueur_id)"
+                        );
     $stmt->execute(['tournoi_id' => $tournoi_id, 'joueur_id' => $joueur_id]);
 
     header("Location: gestion-joueur.php?success=1");
@@ -110,7 +122,10 @@ if (!empty($_POST['tournoi_id']) && !empty($_POST['joueur_id'])) {
             <select name="joueur_id" id="joueur_id" required>
                 <option value="" disabled selected>-- Sélectionner un joueur --</option>
                 <?php
-                $query = $bdd->prepare("SELECT id, nom_utilisateur FROM utilisateurs WHERE role = 'joueur'");
+                $query = $bdd->prepare("SELECT id, nom_utilisateur 
+                                        FROM utilisateurs 
+                                        WHERE role = 'joueur'"
+                                        );
                 $query->execute();
                 $joueurs = $query->fetchAll();
 

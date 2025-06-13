@@ -12,17 +12,25 @@
         $tournoi_id = (int)$_GET['id'];
 
         // Supprimer les dépendances : matchs, participants, classements
-        $deleteMatchs = $bdd->prepare("DELETE FROM matchs WHERE tournoi_id = :id");
+        $deleteMatchs = $bdd->prepare("DELETE FROM matchs 
+                                    WHERE tournoi_id = :id"
+                                    );
         $deleteMatchs->execute(['id' => $tournoi_id]);
 
-        $deleteParticipants = $bdd->prepare("DELETE FROM tournoi_participants WHERE tournoi_id = :id");
+        $deleteParticipants = $bdd->prepare("DELETE FROM tournoi_participants 
+                                            WHERE tournoi_id = :id"
+                                            );
         $deleteParticipants->execute(['id' => $tournoi_id]);
 
-        $deleteClassements = $bdd->prepare("DELETE FROM classements WHERE tournoi_id = :id");
+        $deleteClassements = $bdd->prepare("DELETE FROM classements 
+                                            WHERE tournoi_id = :id"
+                                            );
         $deleteClassements->execute(['id' => $tournoi_id]);
 
         // Supprimer le tournoi
-        $deleteTournoi = $bdd->prepare("DELETE FROM tournois WHERE id = :id");
+        $deleteTournoi = $bdd->prepare("DELETE FROM tournois 
+                                        WHERE id = :id"
+                                        );
         $deleteTournoi->execute(['id' => $tournoi_id]);
 
         // Redirection avec succès

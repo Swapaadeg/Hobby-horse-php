@@ -343,6 +343,72 @@ ul.menu {
   margin-right: 0.5rem;
 }
 
+.classement {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+.classement h4, .classement h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #C06CFF;
+}
+.classement .classement-round {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.classement .classement-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: pink;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+.classement .classement-box:hover {
+  background-color: #FFE04E;
+}
+.classement .classement-box .position {
+  font-weight: bold;
+  width: 2rem;
+  text-align: center;
+  color: #C06CFF;
+}
+.classement .classement-box .joueur {
+  flex: 1;
+  color: #C06CFF;
+  text-align: left;
+}
+.classement .classement-box .points {
+  font-weight: bold;
+  color: #4FD1FF;
+}
+.classement table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.classement table th, .classement table td {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.6rem 1rem;
+  text-align: center;
+}
+.classement table th {
+  background-color: #C06CFF;
+  color: white;
+}
+.classement table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.classement table tr:hover {
+  background-color: #f1f1f1;
+}
+
 * {
   box-sizing: border-box;
 }

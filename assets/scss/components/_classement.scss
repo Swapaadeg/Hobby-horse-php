@@ -1,0 +1,79 @@
+@use "../abstracts/variables" as variable;
+
+.classement {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+
+  h4, h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: variable.$color-purple;
+  }
+
+  .classement-round {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .classement-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: pink;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: variable.$color-yellow;
+    }
+
+    .position {
+      font-weight: bold;
+      width: 2rem;
+      text-align: center;
+      color: variable.$color-purple;
+    }
+
+    .joueur {
+      flex: 1;
+      color: variable.$color-purple;
+      text-align: left;
+    }
+
+    .points {
+      font-weight: bold;
+      color: variable.$color-blue;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+
+    th, td {
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 0.6rem 1rem;
+      text-align: center;
+    }
+
+    th {
+      background-color: variable.$color-purple;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  }
+}

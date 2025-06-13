@@ -9,7 +9,10 @@ if (!isset($_GET['tournoi_id']) || !is_numeric($_GET['tournoi_id'])) {
 $tournoi_id = (int)$_GET['tournoi_id'];
 
 // Récupère les infos du tournoi
-$stmt = $bdd->prepare("SELECT * FROM tournois WHERE id = :id");
+$stmt = $bdd->prepare("SELECT * 
+                    FROM tournois 
+                    WHERE id = :id"
+                    );
 $stmt->execute(['id' => $tournoi_id]);
 $tournoi = $stmt->fetch();
 

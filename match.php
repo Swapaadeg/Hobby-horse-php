@@ -17,7 +17,9 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $tournoi_id = (int)$_GET['id'];
 
 // Récupérer les détails du tournoi
-$request = $bdd->prepare("SELECT nom, type FROM tournois WHERE id = :id");
+$request = $bdd->prepare("SELECT nom, type 
+                        FROM tournois 
+                        WHERE id = :id");
 $request->execute(['id' => $tournoi_id]);
 $tournoi = $request->fetch();
 
@@ -27,7 +29,9 @@ if (!$tournoi) {
 }
 
 // Vérifier le nombre de participants
-$request = $bdd->prepare("SELECT COUNT(*) AS nb FROM tournoi_participants WHERE tournoi_id = :tournoi_id");
+$request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                        FROM tournoi_participants 
+                        WHERE tournoi_id = :tournoi_id");
 $request->execute(['tournoi_id' => $tournoi_id]);
 $participant_count = $request->fetch()['nb'];
 
@@ -41,14 +45,18 @@ if ($tournoi['type'] === 'elimination' && $participant_count != 8) {
 // Générer les matchs si demandé
 if (isset($_POST['generate_matches']) && !$error) {
     // Vérifier si des matchs existent déjà
-    $request = $bdd->prepare("SELECT COUNT(*) AS nb FROM matchs WHERE tournoi_id = :tournoi_id");
+    $request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                            FROM matchs 
+                            WHERE tournoi_id = :tournoi_id");
     $request->execute(['tournoi_id' => $tournoi_id]);
     if ($request->fetch()['nb'] > 0) {
         header("Location: match.php?id=$tournoi_id&error=matches_already_generated");
         exit();
     }
 
-    $request = $bdd->prepare("SELECT joueur_id FROM tournoi_participants WHERE tournoi_id = :tournoi_id");
+    $request = $bdd->prepare("SELECT joueur_id 
+                            FROM tournoi_participants 
+                            WHERE tournoi_id = :tournoi_id");
     $request->execute(['tournoi_id' => $tournoi_id]);
     $participants = $request->fetchAll(PDO::FETCH_COLUMN);
 
@@ -59,7 +67,10 @@ if (isset($_POST['generate_matches']) && !$error) {
         ];
 
         foreach ($matches as $match) {
-            $stmt = $bdd->prepare("INSERT INTO matchs (tournoi_id, joueur1_id, joueur2_id, phase, statut, date) VALUES (:tournoi_id, :joueur1_id, :joueur2_id, :phase, 'A venir', NOW())");
+            $stmt = $bdd->prepare("INSERT INTO matchs (tournoi_id, joueur1_id, joueur2_id, phase, statut, date) 
+                                VALUES (:tournoi_id, :joueur1_id, :joueur2_id, :phase, 'A venir', 
+                                NOW())"
+                                );
             $stmt->execute([
                 'tournoi_id' => $tournoi_id,
                 'joueur1_id' => $participants[$match[0]],
@@ -70,7 +81,10 @@ if (isset($_POST['generate_matches']) && !$error) {
     } elseif ($tournoi['type'] === 'championnat') {
         for ($i = 0; $i < count($participants); $i++) {
             for ($j = $i + 1; $j < count($participants); $j++) {
-                $stmt = $bdd->prepare("INSERT INTO matchs (tournoi_id, joueur1_id, joueur2_id, phase, statut, date) VALUES (:tournoi_id, :joueur1_id, :joueur2_id, :phase, 'A venir', NOW())");
+                $stmt = $bdd->prepare("INSERT INTO matchs (tournoi_id, joueur1_id, joueur2_id, phase, statut, date) 
+                                    VALUES (:tournoi_id, :joueur1_id, :joueur2_id, :phase, 'A venir', 
+                                    NOW())"
+                                    );
                 $stmt->execute([
                     'tournoi_id' => $tournoi_id,
                     'joueur1_id' => $participants[$i],
@@ -91,7 +105,9 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
     $score_joueur2 = intval($_POST['score_joueur2']);
 
     // Récupérer la phase du match
-    $request = $bdd->prepare("SELECT phase, statut FROM matchs WHERE id = :match_id");
+    $request = $bdd->prepare("SELECT phase, statut 
+                            FROM matchs 
+                            WHERE id = :match_id");
     $request->execute(['match_id' => $match_id]);
     $match = $request->fetch();
 
@@ -107,7 +123,10 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
     }
 
     // Mettre à jour le match
-    $stmt = $bdd->prepare("UPDATE matchs SET score_joueur1 = :score_joueur1, score_joueur2 = :score_joueur2, vainqueur_id = :vainqueur_id, statut = 'Terminé' WHERE id = :match_id");
+    $stmt = $bdd->prepare("UPDATE matchs 
+                            SET score_joueur1 = :score_joueur1, score_joueur2 = :score_joueur2, vainqueur_id = :vainqueur_id, statut = 'Terminé' 
+                            WHERE id = :match_id"
+                            );
     $stmt->execute([
         'score_joueur1' => $score_joueur1,
         'score_joueur2' => $score_joueur2,
@@ -119,33 +138,72 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
     if ($tournoi['type'] === 'elimination') {
         // Si le match modifié est un quart, supprimer les demi-finales, la finale et le classement
         if ($match['phase'] === 'quart') {
-            $stmt = $bdd->prepare("DELETE FROM matchs WHERE tournoi_id = :tournoi_id AND phase IN ('demi', 'finale')");
+            $stmt = $bdd->prepare("DELETE 
+                                    FROM matchs 
+                                    WHERE tournoi_id = :tournoi_id 
+                                    AND phase IN ('demi', 'finale')"
+                                    );
+
             $stmt->execute(['tournoi_id' => $tournoi_id]);
-            $stmt = $bdd->prepare("DELETE FROM classements WHERE tournoi_id = :tournoi_id");
+            $stmt = $bdd->prepare("DELETE 
+                                    FROM classements 
+                                    WHERE tournoi_id = :tournoi_id"
+                                    );
+
             $stmt->execute(['tournoi_id' => $tournoi_id]);
         }
         // Si le match modifié est une demi-finale, supprimer la finale et le classement
         elseif ($match['phase'] === 'demi') {
-            $stmt = $bdd->prepare("DELETE FROM matchs WHERE tournoi_id = :tournoi_id AND phase = 'finale'");
+            $stmt = $bdd->prepare("DELETE 
+                                    FROM matchs 
+                                    WHERE tournoi_id = :tournoi_id 
+                                    AND phase = 'finale'"
+                                    );
+
             $stmt->execute(['tournoi_id' => $tournoi_id]);
-            $stmt = $bdd->prepare("DELETE FROM classements WHERE tournoi_id = :tournoi_id");
+            $stmt = $bdd->prepare("DELETE 
+                                    FROM classements 
+                                    WHERE tournoi_id = :tournoi_id"
+                                    );
+
             $stmt->execute(['tournoi_id' => $tournoi_id]);
         }
         // Si le match modifié est la finale, supprimer le classement
         elseif ($match['phase'] === 'finale') {
-            $stmt = $bdd->prepare("DELETE FROM classements WHERE tournoi_id = :tournoi_id");
+            $stmt = $bdd->prepare("DELETE 
+                                    FROM classements 
+                                    WHERE tournoi_id = :tournoi_id"
+                                    );
+                                    
             $stmt->execute(['tournoi_id' => $tournoi_id]);
         }
 
         // Vérifier si tous les quarts sont terminés
-        $request = $bdd->prepare("SELECT COUNT(*) AS nb FROM matchs WHERE tournoi_id = :tournoi_id AND phase = 'quart' AND statut = 'Terminé'");
+        $request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                                FROM matchs 
+                                WHERE tournoi_id = :tournoi_id 
+                                AND phase = 'quart' 
+                                AND statut = 'Terminé'"
+                                );
+
         $request->execute(['tournoi_id' => $tournoi_id]);
         if ($request->fetch()['nb'] == 4) {
             // Vérifier si des demi-finales existent déjà
-            $request = $bdd->prepare("SELECT COUNT(*) AS nb FROM matchs WHERE tournoi_id = :tournoi_id AND phase = 'demi'");
+            $request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                                    FROM matchs 
+                                    WHERE tournoi_id = :tournoi_id 
+                                    AND phase = 'demi'"
+                                    );
             $request->execute(['tournoi_id' => $tournoi_id]);
             if ($request->fetch()['nb'] == 0) {
-                $request = $bdd->prepare("SELECT vainqueur_id FROM matchs WHERE tournoi_id = :tournoi_id AND phase = 'quart' AND statut = 'Terminé' ORDER BY id");
+                $request = $bdd->prepare("SELECT vainqueur_id 
+                                        FROM matchs 
+                                        WHERE tournoi_id = :tournoi_id 
+                                        AND phase = 'quart' 
+                                        AND statut = 'Terminé' 
+                                        ORDER BY id"
+                                        );
+
                 $request->execute(['tournoi_id' => $tournoi_id]);
                 $vainqueurs = $request->fetchAll(PDO::FETCH_COLUMN);
 
@@ -154,7 +212,9 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
                         [0, 1, 'demi'], [2, 3, 'demi']
                     ];
                     foreach ($matches as $match) {
-                        $stmt = $bdd->prepare("INSERT INTO matchs (tournoi_id, joueur1_id, joueur2_id, phase, statut, date) VALUES (:tournoi_id, :joueur1_id, :joueur2_id, :phase, 'A venir', NOW())");
+                        $stmt = $bdd->prepare("INSERT INTO matchs (tournoi_id, joueur1_id, joueur2_id, phase, statut, date) 
+                                            VALUES (:tournoi_id, :joueur1_id, :joueur2_id, :phase, 'A venir', NOW())"
+                                            );
                         $stmt->execute([
                             'tournoi_id' => $tournoi_id,
                             'joueur1_id' => $vainqueurs[$match[0]],
@@ -167,19 +227,38 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
         }
 
         // Vérifier si toutes les demi-finales sont terminées
-        $request = $bdd->prepare("SELECT COUNT(*) AS nb FROM matchs WHERE tournoi_id = :tournoi_id AND phase = 'demi' AND statut = 'Terminé'");
+        $request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                                FROM matchs 
+                                WHERE tournoi_id = :tournoi_id 
+                                AND phase = 'demi' 
+                                AND statut = 'Terminé'"
+                                );
+
         $request->execute(['tournoi_id' => $tournoi_id]);
         if ($request->fetch()['nb'] == 2) {
             // Vérifier si la finale existe déjà
-            $request = $bdd->prepare("SELECT COUNT(*) AS nb FROM matchs WHERE tournoi_id = :tournoi_id AND phase = 'finale'");
+            $request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                                    FROM matchs 
+                                    WHERE tournoi_id = :tournoi_id 
+                                    AND phase = 'finale'"
+                                    );
             $request->execute(['tournoi_id' => $tournoi_id]);
             if ($request->fetch()['nb'] == 0) {
-                $request = $bdd->prepare("SELECT vainqueur_id FROM matchs WHERE tournoi_id = :tournoi_id AND phase = 'demi' AND statut = 'Terminé' ORDER BY id");
+                $request = $bdd->prepare("SELECT vainqueur_id 
+                                        FROM matchs 
+                                        WHERE tournoi_id = :tournoi_id 
+                                        AND phase = 'demi' 
+                                        AND statut = 'Terminé' 
+                                        ORDER BY id"
+                                        );
+
                 $request->execute(['tournoi_id' => $tournoi_id]);
                 $vainqueurs = $request->fetchAll(PDO::FETCH_COLUMN);
 
                 if (count($vainqueurs) == 2) {
-                    $stmt = $bdd->prepare("INSERT INTO matchs (tournoi_id, joueur1_id, joueur2_id, phase, statut, date) VALUES (:tournoi_id, :joueur1_id, :joueur2_id, :phase, 'A venir', NOW())");
+                    $stmt = $bdd->prepare("INSERT INTO matchs (tournoi_id, joueur1_id, joueur2_id, phase, statut, date) 
+                                        VALUES (:tournoi_id, :joueur1_id, :joueur2_id, :phase, 'A venir', NOW())"
+                                        );
                     $stmt->execute([
                         'tournoi_id' => $tournoi_id,
                         'joueur1_id' => $vainqueurs[0],
@@ -191,21 +270,39 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
         }
 
         // Mettre à jour le classement pour la finale
-        $request = $bdd->prepare("SELECT COUNT(*) AS nb FROM matchs WHERE tournoi_id = :tournoi_id AND phase = 'finale' AND statut = 'Terminé'");
+        $request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                                FROM matchs 
+                                WHERE tournoi_id = :tournoi_id 
+                                AND phase = 'finale' 
+                                AND statut = 'Terminé'"
+                                );
+
         $request->execute(['tournoi_id' => $tournoi_id]);
         if ($request->fetch()['nb'] == 1) {
             // Vérifier si le classement existe déjà
-            $request = $bdd->prepare("SELECT COUNT(*) AS nb FROM classements WHERE tournoi_id = :tournoi_id");
+            $request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                                    FROM classements 
+                                    WHERE tournoi_id = :tournoi_id"
+                                    );
+
             $request->execute(['tournoi_id' => $tournoi_id]);
             if ($request->fetch()['nb'] == 0) {
                 // Récupérer les détails de la finale
-                $request = $bdd->prepare("SELECT joueur1_id, joueur2_id, vainqueur_id FROM matchs WHERE tournoi_id = :tournoi_id AND phase = 'finale' AND statut = 'Terminé'");
+                $request = $bdd->prepare("SELECT joueur1_id, joueur2_id, vainqueur_id 
+                                        FROM matchs 
+                                        WHERE tournoi_id = :tournoi_id 
+                                        AND phase = 'finale' 
+                                        AND statut = 'Terminé'"
+                                        );
+
                 $request->execute(['tournoi_id' => $tournoi_id]);
                 $finale = $request->fetch();
                 $loser_id = $finale['vainqueur_id'] == $finale['joueur1_id'] ? $finale['joueur2_id'] : $finale['joueur1_id'];
 
                 // Insérer le vainqueur (1er) et le perdant (2e)
-                $stmt = $bdd->prepare("INSERT INTO classements (tournoi_id, joueur_id, position, points) VALUES (:tournoi_id, :joueur_id, :position, :points)");
+                $stmt = $bdd->prepare("INSERT INTO classements (tournoi_id, joueur_id, position, points) 
+                                        VALUES (:tournoi_id, :joueur_id, :position, :points)"
+                                        );
                 $stmt->execute([
                     'tournoi_id' => $tournoi_id,
                     'joueur_id' => $finale['vainqueur_id'],
@@ -221,8 +318,7 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
 
                 // Récupérer les perdants des demi-finales
                 $request = $bdd->prepare("
-                    SELECT m.joueur1_id, m.joueur2_id, m.vainqueur_id, m.score_joueur1, m.score_joueur2
-                    FROM matchs m
+                    SELECT m.joueur1_id, m.joueur2_id, m.vainqueur_id, m.score_joueur1, m.score_joueur2 FROM matchs m
                     WHERE tournoi_id = :tournoi_id AND phase = 'demi' AND statut = 'Terminé'
                 ");
                 $request->execute(['tournoi_id' => $tournoi_id]);
@@ -296,6 +392,8 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
                 // Insérer les perdants des quarts (5e à 8e)
                 $points_quarts = [4, 3, 2, 1];
                 foreach ($perdants as $index => $joueur_id) {
+                    $stmt = $bdd->prepare("INSERT INTO classements (tournoi_id, joueur_id, position, points) 
+                                            VALUES (:tournoi_id, :joueur_id, :position, :points)");
                     $stmt->execute([
                         'tournoi_id' => $tournoi_id,
                         'joueur_id' => $joueur_id,
@@ -310,10 +408,17 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
     // Mettre à jour le classement pour championnat
     if ($tournoi['type'] === 'championnat') {
         // Supprimer les classements existants pour recalculer
-        $stmt = $bdd->prepare("DELETE FROM classements WHERE tournoi_id = :tournoi_id");
+        $stmt = $bdd->prepare("DELETE FROM classements 
+                                WHERE tournoi_id = :tournoi_id"
+                                );
         $stmt->execute(['tournoi_id' => $tournoi_id]);
 
-        $request = $bdd->prepare("SELECT joueur1_id, joueur2_id, vainqueur_id FROM matchs WHERE tournoi_id = :tournoi_id AND statut = 'Terminé'");
+        $request = $bdd->prepare("SELECT joueur1_id, joueur2_id, vainqueur_id 
+                                FROM matchs 
+                                WHERE tournoi_id = :tournoi_id 
+                                AND statut = 'Terminé'"
+                                );
+
         $request->execute(['tournoi_id' => $tournoi_id]);
         $matchs = $request->fetchAll(PDO::FETCH_ASSOC);
 
@@ -329,7 +434,8 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
         }
 
         foreach ($points as $joueur_id => $point) {
-            $stmt = $bdd->prepare("INSERT INTO classements (tournoi_id, joueur_id, points) VALUES (:tournoi_id, :joueur_id, :points)");
+            $stmt = $bdd->prepare("INSERT INTO classements (tournoi_id, joueur_id, points) 
+                                    VALUES (:tournoi_id, :joueur_id, :points)");
             $stmt->execute([
                 'tournoi_id' => $tournoi_id,
                 'joueur_id' => $joueur_id,
@@ -338,15 +444,30 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
         }
 
         // Mettre à jour les positions après tous les matchs
-        $request = $bdd->prepare("SELECT COUNT(*) AS nb FROM matchs WHERE tournoi_id = :tournoi_id AND statut != 'Terminé'");
+        $request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                                FROM matchs 
+                                WHERE tournoi_id = :tournoi_id 
+                                AND statut != 'Terminé'"
+                                );
+
         $request->execute(['tournoi_id' => $tournoi_id]);
         if ($request->fetch()['nb'] == 0) {
-            $request = $bdd->prepare("SELECT joueur_id, points FROM classements WHERE tournoi_id = :tournoi_id ORDER BY points DESC");
+            $request = $bdd->prepare("SELECT joueur_id, points 
+                                    FROM classements 
+                                    WHERE tournoi_id = :tournoi_id 
+                                    ORDER BY points DESC"
+                                    );
+
             $request->execute(['tournoi_id' => $tournoi_id]);
             $classements = $request->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($classements as $index => $classement) {
-                $stmt = $bdd->prepare("UPDATE classements SET position = :position WHERE tournoi_id = :tournoi_id AND joueur_id = :joueur_id");
+                $stmt = $bdd->prepare("UPDATE classements 
+                                    SET position = :position 
+                                    WHERE tournoi_id = :tournoi_id 
+                                    AND joueur_id = :joueur_id"
+                                    );
+
                 $stmt->execute([
                     'position' => $index + 1,
                     'tournoi_id' => $tournoi_id,
@@ -365,7 +486,7 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
 <body>
     <?php include('nav.php'); ?>
     <section class="match__wrapper container">
-        <h2>Gestion des Matchs : <?php echo htmlspecialchars($tournoi['nom']); ?></h2>
+        <h2>Gestion des Matchs : <?php echo $tournoi['nom']; ?></h2>
 
         <?php if (isset($error)): ?>
             <p class="error"><?php echo $error; ?></p>
@@ -387,6 +508,7 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
 
         <h3>Matchs</h3>
         <?php
+        // Récupérer les matchs
         $request = $bdd->prepare("
             SELECT m.*, u1.nom_utilisateur AS joueur_1, u2.nom_utilisateur AS joueur_2
             FROM matchs m
@@ -398,25 +520,113 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
         $request->execute(['tournoi_id' => $tournoi_id]);
         $matchs = $request->fetchAll(PDO::FETCH_ASSOC);
 
-        if (count($matchs) > 0) {
-            echo '<div class="match-list">';
-            foreach ($matchs as $match) {
-                echo '<div class="match-card">';
-                echo '<p>' . htmlspecialchars($match['joueur_1']) . ' vs ' . htmlspecialchars($match['joueur_2']) . ' (' . ucfirst($match['phase']) . ')</p>';
-                echo '<p>Statut : ' . htmlspecialchars($match['statut']) . '</p>';
-                echo '<form method="POST">';
-                echo '<input type="hidden" name="match_id" value="' . $match['id'] . '">';
-                echo '<input type="hidden" name="joueur1_id" value="' . $match['joueur1_id'] . '">';
-                echo '<input type="hidden" name="joueur2_id" value="' . $match['joueur2_id'] . '">';
-                echo '<input type="number" name="score_joueur1" value="' . ($match['statut'] === 'Terminé' ? $match['score_joueur1'] : '') . '" placeholder="Score ' . htmlspecialchars($match['joueur_1']) . '" required>';
-                echo '<input type="number" name="score_joueur2" value="' . ($match['statut'] === 'Terminé' ? $match['score_joueur2'] : '') . '" placeholder="Score ' . htmlspecialchars($match['joueur_2']) . '" required>';
-                echo '<button type="submit">' . ($match['statut'] === 'Terminé' ? 'Modifier' : 'Enregistrer') . '</button>';
-                echo '</form>';
-                echo '</div>';
+        if ($tournoi['type'] === 'championnat') {
+            // Récupérer les participants pour le tableau croisé
+            $request = $bdd->prepare("
+                SELECT u.id, u.nom_utilisateur
+                FROM tournoi_participants tp
+                JOIN utilisateurs u ON tp.joueur_id = u.id
+                WHERE tp.tournoi_id = :tournoi_id
+                ORDER BY u.nom_utilisateur
+            ");
+            $request->execute(['tournoi_id' => $tournoi_id]);
+            $participants = $request->fetchAll(PDO::FETCH_ASSOC);
+
+            // Créer une matrice pour les matchs
+            $match_matrix = [];
+            foreach ($participants as $p1) {
+                foreach ($participants as $p2) {
+                    $match_matrix[$p1['id']][$p2['id']] = null;
+                }
             }
-            echo '</div>';
-        } else {
-            echo '<p>Aucun match n\'a été généré pour ce tournoi.</p>';
+
+            foreach ($matchs as $match) {
+                $match_matrix[$match['joueur1_id']][$match['joueur2_id']] = $match;
+                $match_matrix[$match['joueur2_id']][$match['joueur1_id']] = $match; // Symétrie
+            }
+
+            if (count($participants) > 0) {
+                echo '<div class="match-table-wrapper">';
+                echo '<table class="match-table">';
+                // En-tête
+                echo '<tr><th></th>';
+                foreach ($participants as $participant) {
+                    echo '<th>' . htmlspecialchars($participant['nom_utilisateur']) . '</th>';
+                }
+                echo '</tr>';
+
+                // Lignes
+                foreach ($participants as $p1) {
+                    echo '<tr>';
+                    echo '<th>' . htmlspecialchars($p1['nom_utilisateur']) . '</th>';
+                    foreach ($participants as $p2) {
+                        if ($p1['id'] === $p2['id']) {
+                            echo '<td class="diagonal">-</td>';
+                        } elseif (isset($match_matrix[$p1['id']][$p2['id']])) {
+                            $match = $match_matrix[$p1['id']][$p2['id']];
+                            $is_joueur1 = $match['joueur1_id'] === $p1['id'];
+                            $score1 = $is_joueur1 ? $match['score_joueur1'] : $match['score_joueur2'];
+                            $score2 = $is_joueur1 ? $match['score_joueur2'] : $match['score_joueur1'];
+                            $joueur1_id = $match['joueur1_id'];
+                            $joueur2_id = $match['joueur2_id'];
+                            $class = $match['statut'] === 'Terminé' ? 'match-terminated' : 'match-pending';
+
+                            echo '<td class="' . $class . '">';
+                            echo '<form method="POST" class="match-form">';
+                            echo '<input type="hidden" name="match_id" value="' . $match['id'] . '">';
+                            echo '<input type="hidden" name="joueur1_id" value="' . $joueur1_id . '">';
+                            echo '<input type="hidden" name="joueur2_id" value="' . $joueur2_id . '">';
+                            echo '<input type="number" name="score_joueur1" value="' . ($match['statut'] === 'Terminé' ? $score1 : '') . '" placeholder="Score" required>';
+                            echo '<input type="number" name="score_joueur2" value="' . ($match['statut'] === 'Terminé' ? $score2 : '') . '" placeholder="Score" required>';
+                            echo '<button type="submit">' . ($match['statut'] === 'Terminé' ? 'Modifier' : 'Enregistrer') . '</button>';
+                            echo '</form>';
+                            echo '</td>';
+                        } else {
+                            echo '<td>-</td>';
+                        }
+                    }
+                    echo '</tr>';
+                }
+                echo '</table>';
+                echo '</div>';
+            } else {
+                echo '<p>Aucun participant dans ce tournoi.</p>';
+            }
+        } elseif ($tournoi['type'] === 'elimination') {
+            // Grouper les matchs par phase
+            $phases = ['quart' => [], 'demi' => [], 'finale' => []];
+            foreach ($matchs as $match) {
+                $phases[$match['phase']][] = $match;
+            }
+
+            if (count($matchs) > 0) {
+                echo '<div class="match-list">';
+                foreach (['quart' => 'Quarts de finale', 'demi' => 'Demi-finales', 'finale' => 'Finale'] as $phase_key => $phase_name) {
+                    if (!empty($phases[$phase_key])) {
+                        echo '<div class="phase-section">';
+                        echo '<h4>' . $phase_name . '</h4>';
+                        foreach ($phases[$phase_key] as $match) {
+                            $class = $match['statut'] === 'Terminé' ? 'match-terminated' : 'match-pending';
+                            echo '<div class="match-card ' . $class . '">';
+                            echo '<p>' . htmlspecialchars($match['joueur_1']) . ' vs ' . htmlspecialchars($match['joueur_2']) . '</p>';
+                            echo '<p>Statut : ' . htmlspecialchars($match['statut']) . '</p>';
+                            echo '<form method="POST" class="match-form">';
+                            echo '<input type="hidden" name="match_id" value="' . $match['id'] . '">';
+                            echo '<input type="hidden" name="joueur1_id" value="' . $match['joueur1_id'] . '">';
+                            echo '<input type="hidden" name="joueur2_id" value="' . $match['joueur2_id'] . '">';
+                            echo '<input type="number" name="score_joueur1" value="' . ($match['statut'] === 'Terminé' ? $match['score_joueur1'] : '') . '" placeholder="Score ' . htmlspecialchars($match['joueur_1']) . '" required>';
+                            echo '<input type="number" name="score_joueur2" value="' . ($match['statut'] === 'Terminé' ? $match['score_joueur2'] : '') . '" placeholder="Score ' . htmlspecialchars($match['joueur_2']) . '" required>';
+                            echo '<button type="submit">' . ($match['statut'] === 'Terminé' ? 'Modifier' : 'Enregistrer') . '</button>';
+                            echo '</form>';
+                            echo '</div>';
+                        }
+                        echo '</div>';
+                    }
+                }
+                echo '</div>';
+            } else {
+                echo '<p>Aucun match n\'a été généré pour ce tournoi.</p>';
+            }
         }
         ?>
 
@@ -432,42 +642,24 @@ if (!empty($_POST['match_id']) && isset($_POST['score_joueur1']) && isset($_POST
             ");
             $request->execute(['tournoi_id' => $tournoi_id]);
             $classements = $request->fetchAll(PDO::FETCH_ASSOC);
-
-            if (count($classements) > 0) {
-                echo '<table>';
-                echo '<tr><th>Position</th><th>Joueur</th><th>Points</th></tr>';
-                foreach ($classements as $classement) {
-                    echo '<tr><td>' . ($classement['position'] ?: '-') . '</td><td>' . htmlspecialchars($classement['nom_utilisateur']) . '</td><td>' . $classement['points'] . '</td></tr>';
-                }
-                echo '</table>';
-            } else {
-                echo '<p>Aucun classement disponible pour le moment.</p>';
-            }
             ?>
-        <?php elseif ($tournoi['type'] === 'elimination'): ?>
-            <h3>Classement</h3>
-            <?php
-            $request = $bdd->prepare("
-                SELECT c.position, c.points, u.nom_utilisateur
-                FROM classements c
-                JOIN utilisateurs u ON c.joueur_id = u.id
-                WHERE c.tournoi_id = :tournoi_id
-                ORDER BY c.position ASC
-            ");
-            $request->execute(['tournoi_id' => $tournoi_id]);
-            $classements = $request->fetchAll(PDO::FETCH_ASSOC);
 
-            if (count($classements) > 0) {
-                echo '<table>';
-                echo '<tr><th>Position</th><th>Joueur</th><th>Points</th></tr>';
-                foreach ($classements as $classement) {
-                    echo '<tr><td>' . $classement['position'] . '</td><td>' . htmlspecialchars($classement['nom_utilisateur']) . '</td><td>' . $classement['points'] . '</td></tr>';
-                }
-                echo '</table>';
-            } else {
-                echo '<p>Aucun classement disponible pour le moment.</p>';
-            }
-            ?>
+            <?php if (count($classements) > 0): ?>
+                <div class="classement">
+                    <div class="classement-round">
+                        <h4>Classement Final</h4>
+                        <?php foreach ($classements as $classement): ?>
+                            <div class="classement-box">
+                                <span class="position"><?= $classement['position'] ?: '-' ?></span>
+                                <span class="joueur"><?= htmlspecialchars($classement['nom_utilisateur']) ?></span>
+                                <span class="points"><?= $classement['points'] ?> pts</span>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <p>Aucun classement disponible pour le moment.</p>
+            <?php endif; ?>
         <?php endif; ?>
     </section>
     <?php include('footer.php') ?>
