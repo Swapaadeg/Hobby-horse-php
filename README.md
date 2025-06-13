@@ -12,4 +12,4 @@ en cours/terminé/à venir<br>
 responsive à terminer<br> 
 
 
-commencer avec http://localhost:8080/hobby-horse/index.php
+commencer avec http://localhost:8080/Hobby-horse-PHP/index.php
