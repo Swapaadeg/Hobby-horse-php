@@ -10,3 +10,6 @@ mdp : 123<br>
 Reste à faire : <br> 
 en cours/terminé/à venir<br> 
 responsive à terminer<br> 
+
+
+commencer avec http://localhost:8080/hobby-horse/index.php
