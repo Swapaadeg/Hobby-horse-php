@@ -1,0 +1,17 @@
+@media (max-width: 1010px) {
+  .burger {
+    display: flex;
+  }
+
+  .navbar ul.menu,
+  .navbar ul.auth,
+  .navbar ul.admin-dropdown {
+    display: none;
+  }
+
+  .navbar.active ul.menu,
+  .navbar.active ul.auth,
+  .navbar.active ul.admin-dropdown {
+    display: flex;
+  }
+}

@@ -49,7 +49,7 @@
                         echo '<a class="btn" href="tournoi-suppression.php?id=' . $data['id'] . '" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer ce tournoi 🐎 ?\')">🗑️ Supprimer</a>';
                         echo '<a class="btn" href="match.php?id=' . $data['id'] . '">🎯 Gérer les Matchs</a>';
                     }
-echo '</div>';
+                    echo '</div>';
                     echo '</div>';
                 }
             ?>
