@@ -1,3 +1,24 @@
+@media screen and (max-width: 1024px) {
+    //CARDS
+  .tournaments {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .tournament-card {
+    max-width: 100%;
+    padding: 1.5rem;
+
+    h3 {
+      font-size: 1.3rem;
+    }
+
+    .tournament-desc {
+      font-size: 0.95rem;
+    }
+  }
+}
+
+
 @media (max-width: 1010px) {
   .burger {
     display: flex;
@@ -14,4 +35,46 @@
   .navbar.active ul.admin-dropdown {
     display: flex;
   }
+}
+
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 100%;
+    }
+    .tournaments__wrapper {
+        padding: 2rem 1rem;
+        justify-content: center;
+    }
+
+    .tournament-card {
+        padding: 1rem;
+
+        h3 {
+        font-size: 1.1rem;
+        }
+
+        .tournament-desc {
+        font-size: 0.9rem;
+        }
+
+        .image-container {
+        height: 160px;
+        }
+    }
+    // responsive canasson cup 
+    .title {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    h1 {
+        font-size: 4rem;
+        margin: 0;
+    }
+
+    #auth {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
 }
