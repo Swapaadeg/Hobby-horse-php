@@ -1,0 +1,73 @@
+@use "../abstracts/variables" as variable;
+
+.match-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  input[type="number"] {
+    width: 60px;
+    padding: 0.3rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+// Conteneur principal pour les matchs en élimination
+.match-list {
+  display: flex;
+  justify-content: center; // Centrage du bloc
+  gap: 3rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+
+  .phase-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 280px;
+
+    h4 {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      color: variable.$color-blue;
+      border-bottom: 2px solid variable.$color-purple;
+      padding-bottom: 0.5rem;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .match-card {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      width: 100%;
+      max-width: 300px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease;
+
+      p {
+        margin: 0.4rem 0;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      &:hover {
+        transform: scale(1.02);
+      }
+
+      &.match-terminated {
+        border-left: 4px solid variable.$color-blue;
+      }
+      &.match-pending {
+        border-left: 4px solid variable.$color-pink;
+      }
+    }
+  }
+}

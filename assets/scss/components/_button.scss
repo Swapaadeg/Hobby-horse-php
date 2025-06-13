@@ -39,3 +39,50 @@ transition: all 0.3s ease;
     box-shadow: 0 0 25px rgba(variable.$color-pink, 0.6), 0 0 40px rgba(variable.$color-purple, 0.4);
 }
 }
+
+//Bouton gérer les amtchs panel admin
+
+.match__wrapper {
+  form {
+    margin: 1rem 0;
+    text-align: center;
+
+    button[name="generate_matches"] {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, variable.$color-purple, variable.$color-blue);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, variable.$color-blue, variable.$color-purple);
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      &:active {
+        transform: scale(1);
+        box-shadow: none;
+      }
+    }
+  }
+}
+.match-form {
+  button {
+    padding: 0.3rem 0.6rem;
+    background: variable.$color-purple;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: variable.$color-blue;
+    }
+  }
+}

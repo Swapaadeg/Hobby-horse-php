@@ -211,6 +211,44 @@ ul.menu {
   box-shadow: 0 0 25px rgba(255, 78, 177, 0.6), 0 0 40px rgba(192, 108, 255, 0.4);
 }
 
+.match__wrapper form {
+  margin: 1rem 0;
+  text-align: center;
+}
+.match__wrapper form button[name=generate_matches] {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #C06CFF, #4FD1FF);
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.match__wrapper form button[name=generate_matches]:hover {
+  background: linear-gradient(135deg, #4FD1FF, #C06CFF);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.match__wrapper form button[name=generate_matches]:active {
+  transform: scale(1);
+  box-shadow: none;
+}
+
+.match-form button {
+  padding: 0.3rem 0.6rem;
+  background: #C06CFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.match-form button:hover {
+  background: #4FD1FF;
+}
+
 .banner {
   position: relative;
   width: 100%;
@@ -407,6 +445,70 @@ ul.menu {
 }
 .classement table tr:hover {
   background-color: #f1f1f1;
+}
+
+.match-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.match-form input[type=number] {
+  width: 60px;
+  padding: 0.3rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.match-list {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+.match-list .phase-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 280px;
+}
+.match-list .phase-section h4 {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+  color: #4FD1FF;
+  border-bottom: 2px solid #C06CFF;
+  padding-bottom: 0.5rem;
+  width: 100%;
+  max-width: 300px;
+}
+.match-list .phase-section .match-card {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 300px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+.match-list .phase-section .match-card p {
+  margin: 0.4rem 0;
+  font-weight: bold;
+  text-align: center;
+}
+.match-list .phase-section .match-card:hover {
+  transform: scale(1.02);
+}
+.match-list .phase-section .match-card.match-terminated {
+  border-left: 4px solid #4FD1FF;
+}
+.match-list .phase-section .match-card.match-pending {
+  border-left: 4px solid #FF4EB1;
 }
 
 * {

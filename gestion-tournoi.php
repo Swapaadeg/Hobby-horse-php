@@ -27,9 +27,10 @@ if (!$tournoi) {
 }
 
 // Check le nombre de participants
-$request = $bdd->prepare("SELECT COUNT(*) AS nb FROM tournoi_participants 
-                                                WHERE tournoi_id = :tournoi_id"
-                                                );
+$request = $bdd->prepare("SELECT COUNT(*) AS nb 
+                        FROM tournoi_participants 
+                        WHERE tournoi_id = :tournoi_id"
+                        );
 $request->execute(['tournoi_id' => $tournoi_id]);
 $participant_count = $request->fetch()['nb'];
 
