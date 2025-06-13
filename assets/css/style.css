@@ -299,6 +299,14 @@ ul.menu {
     transform: translateY(0) scale(1);
   }
 }
+@keyframes pony-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
 #auth {
   display: flex;
   flex-direction: column;
@@ -370,7 +378,8 @@ h2 {
 
 h3 {
   font-style: italic;
-  color: #FF4EB1;
+  color: #4FD1FF;
+  font-size: 2rem;
   text-align: center;
 }
 
@@ -439,9 +448,10 @@ h3 {
 }
 
 .bracket {
+  position: relative;
   display: flex;
   justify-content: space-around;
-  align-items: flex-start;
+  align-items: center;
   gap: 2rem;
   margin-top: 3rem;
   padding: 2rem;
@@ -456,6 +466,7 @@ h3 {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  position: relative;
 }
 .bracket .round h4 {
   font-size: 1.5rem;
@@ -464,6 +475,7 @@ h3 {
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 .bracket .round .match-box {
+  position: relative;
   background: linear-gradient(135deg, #FF4EB1, #4FD1FF);
   color: white;
   padding: 1rem 1.5rem;
@@ -496,6 +508,59 @@ h3 {
 .bracket .round .match-box span.winner {
   color: #FF4EB1;
   font-size: 1.05rem;
+}
+
+.champion-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+.champion-matrix th, .champion-matrix td {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0.6rem;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+.champion-matrix .corner {
+  background-color: #4a126d;
+  color: white;
+  font-weight: bold;
+}
+.champion-matrix .player-row, .champion-matrix .player-col {
+  background-color: #C06CFF;
+  color: white;
+  font-weight: bold;
+}
+.champion-matrix .player-row.hovered, .champion-matrix .player-col.hovered {
+  background-color: #4FD1FF;
+  color: white;
+}
+.champion-matrix .result-cell:hover {
+  background-color: #FF4EB1;
+  color: white;
+  cursor: pointer;
+}
+.champion-matrix .self {
+  background-color: #eee;
+  font-style: italic;
+  color: #aaa;
+}
+.champion-matrix .ongoing {
+  color: #4FD1FF;
+  font-weight: bold;
+}
+.champion-matrix .upcoming {
+  color: #FF4EB1;
+}
+.champion-matrix .self {
+  font-size: 1.5rem;
+  display: inline-block;
+  color: #C06CFF;
+  animation: pony-bounce 1.2s ease-in-out infinite;
+  line-height: 1;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.3rem;
+  border-radius: 0.5rem;
 }
 
 /*# sourceMappingURL=style.css.map */

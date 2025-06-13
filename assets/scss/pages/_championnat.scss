@@ -1,0 +1,65 @@
+@use "../abstracts/variables" as variable;
+
+.champion-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+
+  th, td {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0.6rem;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+
+  // Le titre de la première colonne
+  .corner {
+    background-color: #4a126d;
+    color: white;
+    font-weight: bold;
+    }
+    
+  .player-row, .player-col {
+    background-color: variable.$color-purple;
+    color: white;
+    font-weight: bold;
+  }
+
+  // Hover croisé
+  .player-row.hovered, .player-col.hovered {
+    background-color: variable.$color-blue;
+    color: white;
+  }
+
+  .result-cell:hover {
+    background-color: variable.$color-pink;
+    color: white;
+    cursor: pointer;
+  }
+
+  .self {
+    background-color: #eee;
+    font-style: italic;
+    color: #aaa;
+  }
+
+  .ongoing {
+    color: variable.$color-blue;
+    font-weight: bold;
+  }
+
+  .upcoming {
+    color: variable.$color-pink;
+  }
+
+    .self {
+        font-size: 1.5rem;
+        display: inline-block;
+        color: variable.$color-purple;
+        animation: pony-bounce 1.2s ease-in-out infinite;
+        line-height: 1;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.3rem;
+        border-radius: 0.5rem;
+    }
+}

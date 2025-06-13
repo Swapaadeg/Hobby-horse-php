@@ -24,12 +24,12 @@ include('head.php');
 <body>
     <?php include('nav.php'); ?>
     <section class="bracket__wrapper container">
-        <h2>Phase du tournoi : <?= htmlspecialchars($tournoi['nom']) ?></h2>
+        <h2>Championnat : <?= $tournoi['nom'] ?></h2>
 
         <?php if ($tournoi['type'] === 'elimination') {
             include('tournoi-elimination.php');
         } elseif ($tournoi['type'] === 'championnat') {
-            include('table-championnat.php');
+            include('tournoi-championnat.php');
         } ?>
     </section>
     <?php include('footer.php'); ?>
